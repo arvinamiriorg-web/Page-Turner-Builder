@@ -1,0 +1,1550 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>Page Turner Builder | صفحه ورق زن ساز</title>
+  <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/font-face.css" rel="stylesheet" />
+  <style>
+    /* ===== Reset & Font ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Vazir', sans-serif;
+      background: linear-gradient(145deg, #f0f7f0 0%, #e0efe0 100%);
+      min-height: 100vh;
+      padding: 16px 14px 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #1e2a1e;
+      transition: background 0.3s, color 0.2s;
+    }
+
+    /* ===== Green-Orange Themes ===== */
+    body.theme-dark {
+      background: linear-gradient(145deg, #0f1a0f 0%, #1a2a1a 50%, #0f2a0f 100%);
+      color: #d8e8d8;
+    }
+    body.theme-dark .header h1 {
+      color: #ffb347;
+      background: none;
+      -webkit-text-fill-color: #ffb347;
+    }
+    body.theme-dark .header p {
+      background: rgba(255,255,255,0.06);
+      color: #a0c0a0;
+      border-color: rgba(255,255,255,0.06);
+    }
+    body.theme-dark .settings-panel {
+      background: rgba(20,40,20,0.7);
+      border-color: rgba(255,255,255,0.06);
+    }
+    body.theme-dark .settings-group label {
+      color: #c8e0c8;
+    }
+    body.theme-dark .settings-group select,
+    body.theme-dark .settings-group input[type="checkbox"] {
+      background: rgba(30,60,30,0.7);
+      color: #d8e8d8;
+      border-color: rgba(255,255,255,0.05);
+    }
+    body.theme-dark .input-box {
+      background: rgba(20,40,20,0.7);
+      border-color: rgba(255,255,255,0.06);
+    }
+    body.theme-dark .input-box textarea {
+      background: rgba(30,60,30,0.7);
+      color: #d8e8d8;
+      border-color: rgba(255,255,255,0.05);
+    }
+    body.theme-dark .input-box textarea:focus {
+      background: rgba(40,80,40,0.8);
+      border-color: rgba(255,179,71,0.3);
+    }
+    body.theme-dark .btn-generate {
+      background: linear-gradient(135deg, #ffb347, #ff8c42);
+      color: #0f1a0f;
+    }
+    body.theme-dark .btn-generate:hover {
+      background: linear-gradient(135deg, #ffc057, #ff9a52);
+      box-shadow: 0 10px 32px rgba(255,179,71,0.3);
+    }
+    body.theme-dark .card {
+      background: rgba(30,60,30,0.5);
+      border-color: rgba(255,255,255,0.06);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    }
+    body.theme-dark .card:hover {
+      background: rgba(40,80,40,0.6);
+    }
+    body.theme-dark .card h3 {
+      color: #ffb347;
+      background: none;
+      -webkit-text-fill-color: #ffb347;
+    }
+    body.theme-dark .card p { color: #b0d0b0; }
+    body.theme-dark .card .btn-link {
+      background: linear-gradient(135deg, #ffb347, #ff8c42);
+      color: #0f1a0f;
+    }
+    body.theme-dark .card .btn-link:hover {
+      background: linear-gradient(135deg, #ffc057, #ff9a52);
+      box-shadow: 0 8px 24px rgba(255,179,71,0.2);
+    }
+    body.theme-dark .output-box {
+      background: rgba(20,40,20,0.5);
+      border-color: rgba(255,255,255,0.06);
+    }
+    body.theme-dark .output-box pre { color: #c0d8c0; }
+    body.theme-dark .footer {
+      background: rgba(20,40,20,0.4);
+      color: #b0d0b0;
+      border-color: rgba(255,255,255,0.05);
+    }
+    body.theme-dark .footer a { color: #ffb347; }
+    body.theme-dark .copy-btn {
+      background: rgba(255,255,255,0.08);
+      color: #c0d8c0;
+      border-color: rgba(255,255,255,0.1);
+    }
+    body.theme-dark .copy-btn:hover {
+      background: rgba(255,255,255,0.15);
+    }
+
+    /* Light theme - green-orange */
+    body.theme-light {
+      background: linear-gradient(145deg, #f0f7f0 0%, #e0efe0 100%);
+    }
+    body.theme-light .header h1 {
+      color: #e8852e;
+      background: none;
+      -webkit-text-fill-color: #e8852e;
+    }
+    body.theme-light .header p {
+      background: rgba(255,255,255,0.4);
+      color: #5a8a5a;
+      border-color: rgba(255,255,255,0.4);
+    }
+    body.theme-light .settings-panel {
+      background: rgba(240,255,240,0.5);
+      border-color: rgba(255,255,255,0.5);
+    }
+    body.theme-light .settings-group label {
+      color: #2a5a2a;
+    }
+    body.theme-light .settings-group select,
+    body.theme-light .settings-group input[type="checkbox"] {
+      background: rgba(240,255,240,0.7);
+      border-color: rgba(0,0,0,0.06);
+      color: #1a3a1a;
+    }
+    body.theme-light .input-box {
+      background: rgba(240,255,240,0.6);
+      border-color: rgba(255,255,255,0.6);
+    }
+    body.theme-light .input-box textarea {
+      background: rgba(240,255,240,0.5);
+      border-color: rgba(0,0,0,0.05);
+      color: #1a3a1a;
+    }
+    body.theme-light .input-box textarea:focus {
+      border-color: rgba(232,133,46,0.4);
+      background: rgba(240,255,240,0.75);
+    }
+    body.theme-light .btn-generate {
+      background: linear-gradient(135deg, #ffb347, #ff8c42);
+      color: #1a3a1a;
+    }
+    body.theme-light .btn-generate:hover {
+      background: linear-gradient(135deg, #ffc057, #ff9a52);
+      box-shadow: 0 10px 32px rgba(255,179,71,0.25);
+    }
+    body.theme-light .card {
+      background: rgba(240,255,240,0.5);
+      border-color: rgba(255,255,255,0.6);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.04);
+    }
+    body.theme-light .card:hover {
+      background: rgba(240,255,240,0.65);
+    }
+    body.theme-light .card h3 {
+      color: #e8852e;
+      background: none;
+      -webkit-text-fill-color: #e8852e;
+    }
+    body.theme-light .card p { color: #4a7a4a; }
+    body.theme-light .card .btn-link {
+      background: linear-gradient(135deg, #ffb347, #ff8c42);
+      color: #1a3a1a;
+    }
+    body.theme-light .card .btn-link:hover {
+      background: linear-gradient(135deg, #ffc057, #ff9a52);
+      box-shadow: 0 8px 24px rgba(255,179,71,0.15);
+    }
+    body.theme-light .output-box {
+      background: rgba(240,255,240,0.35);
+      border-color: rgba(255,255,255,0.4);
+    }
+    body.theme-light .output-box pre { color: #3a5a3a; }
+    body.theme-light .footer {
+      background: rgba(240,255,240,0.3);
+      color: #5a8a5a;
+      border-color: rgba(255,255,255,0.3);
+    }
+    body.theme-light .footer a { color: #e8852e; }
+    body.theme-light .copy-btn {
+      background: rgba(240,255,240,0.6);
+      color: #3a5a3a;
+      border-color: rgba(0,0,0,0.06);
+    }
+    body.theme-light .copy-btn:hover {
+      background: rgba(240,255,240,0.8);
+    }
+
+    /* ===== RTL/LTR Support ===== */
+    body.dir-rtl { direction: rtl; }
+    body.dir-ltr { direction: ltr; }
+    body.dir-rtl .card, body.dir-rtl .header, body.dir-rtl .settings-panel, body.dir-rtl .footer { direction: rtl; }
+    body.dir-ltr .card, body.dir-ltr .header, body.dir-ltr .settings-panel, body.dir-ltr .footer { direction: ltr; }
+    body.dir-rtl .output-box pre { direction: ltr; text-align: left; }
+    body.dir-ltr .output-box pre { direction: ltr; text-align: left; }
+
+    /* ===== Header ===== */
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+      width: 100%;
+      max-width: 700px;
+    }
+    .header h1 {
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: #e8852e;
+      display: inline-block;
+    }
+    .header p {
+      font-size: 13px;
+      color: #5a8a5a;
+      margin-top: 4px;
+      background: rgba(255,255,255,0.4);
+      backdrop-filter: blur(4px);
+      display: inline-block;
+      padding: 4px 20px;
+      border-radius: 40px;
+      border: 1px solid rgba(255,255,255,0.4);
+    }
+
+    /* ===== Settings Panel ===== */
+    .settings-panel {
+      width: 100%;
+      max-width: 700px;
+      background: rgba(240,255,240,0.5);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-radius: 24px;
+      padding: 16px 20px 18px;
+      border: 1px solid rgba(255,255,255,0.5);
+      margin-bottom: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px 10px;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.03);
+    }
+    .settings-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .settings-group label {
+      font-size: 13px;
+      color: #2a5a2a;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 400;
+    }
+    .settings-group select,
+    .settings-group input[type="checkbox"] {
+      font-family: 'Vazir', sans-serif;
+      padding: 6px 12px;
+      border-radius: 40px;
+      border: 1px solid rgba(0,0,0,0.06);
+      background: rgba(240,255,240,0.7);
+      backdrop-filter: blur(4px);
+      font-size: 13px;
+      color: #1a3a1a;
+      cursor: pointer;
+      transition: 0.2s;
+      outline: none;
+    }
+    .settings-group select:focus,
+    .settings-group input:focus {
+      border-color: rgba(232,133,46,0.3);
+      box-shadow: 0 0 0 3px rgba(232,133,46,0.08);
+    }
+    .settings-group input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: #e8852e;
+      border-radius: 6px;
+    }
+    .settings-group input[type="range"] {
+      width: 90px;
+      accent-color: #e8852e;
+      background: rgba(255,255,255,0.3);
+      border-radius: 20px;
+      height: 4px;
+    }
+    .settings-group .range-label {
+      font-size: 12px;
+      color: #5a8a5a;
+      min-width: 30px;
+      text-align: center;
+    }
+
+    /* ===== Input Box ===== */
+    .input-box {
+      width: 100%;
+      max-width: 700px;
+      background: rgba(240,255,240,0.6);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-radius: 28px;
+      padding: 20px 20px 18px;
+      border: 1px solid rgba(255,255,255,0.6);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.04);
+      margin-bottom: 20px;
+      transition: 0.25s;
+    }
+    .input-box textarea {
+      width: 100%;
+      padding: 14px 18px;
+      border-radius: 20px;
+      border: 1px solid rgba(0,0,0,0.05);
+      background: rgba(240,255,240,0.5);
+      font-family: 'Vazir', sans-serif;
+      font-size: 14px;
+      line-height: 1.7;
+      resize: vertical;
+      min-height: 90px;
+      color: #1a3a1a;
+      transition: 0.25s;
+      backdrop-filter: blur(4px);
+    }
+    .input-box textarea:focus {
+      outline: none;
+      border-color: rgba(232,133,46,0.4);
+      background: rgba(240,255,240,0.75);
+      box-shadow: 0 0 0 4px rgba(232,133,46,0.06);
+    }
+    .input-box textarea::placeholder {
+      color: #8aaa8a;
+      font-weight: 300;
+    }
+    .btn-generate {
+      width: 100%;
+      margin-top: 16px;
+      padding: 14px 10px;
+      border: none;
+      border-radius: 40px;
+      font-family: 'Vazir', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      color: #1a3a1a;
+      background: linear-gradient(135deg, #ffb347, #ff8c42);
+      cursor: pointer;
+      transition: 0.3s;
+      letter-spacing: 0.3px;
+      box-shadow: 0 4px 16px rgba(255,179,71,0.2);
+    }
+    .btn-generate:hover {
+      transform: translateY(-2px) scale(1.01);
+      box-shadow: 0 10px 32px rgba(255,179,71,0.3);
+    }
+
+    /* ===== Scroll Container ===== */
+    .scroll-container {
+      display: flex;
+      overflow-x: auto;
+      gap: 18px;
+      padding: 10px 4px 22px 4px;
+      max-width: 1100px;
+      width: 100%;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scroll-behavior: smooth;
+      transition: 0.2s;
+    }
+    .scroll-container::-webkit-scrollbar {
+      height: 5px;
+    }
+    .scroll-container::-webkit-scrollbar-track {
+      background: rgba(0,0,0,0.04);
+      border-radius: 20px;
+    }
+    .scroll-container::-webkit-scrollbar-thumb {
+      background: rgba(232,133,46,0.3);
+      border-radius: 20px;
+    }
+
+    /* ===== Glass Card ===== */
+    .card {
+      flex: 0 0 280px;
+      min-height: 320px;
+      height: auto;
+      background: rgba(240,255,240,0.5);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-radius: 32px;
+      padding: 24px 18px 22px;
+      scroll-snap-align: center;
+      border: 1px solid rgba(255,255,255,0.6);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.04);
+      text-align: center;
+      transition: 0.35s cubic-bezier(0.2,0.9,0.3,1.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      overflow: visible;
+    }
+    .card:hover {
+      transform: translateY(-6px) scale(1.01);
+      box-shadow: 0 16px 48px rgba(232,133,46,0.08);
+      background: rgba(240,255,240,0.65);
+    }
+    .card .media {
+      width: 100%;
+      margin-bottom: 14px;
+      border-radius: 20px;
+      overflow: hidden;
+      background: rgba(0,0,0,0.02);
+      aspect-ratio: 16 / 9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .card .media img,
+    .card .media video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      border-radius: 20px;
+    }
+    .card .media audio {
+      width: 100%;
+      height: 54px;
+      border-radius: 40px;
+    }
+    .card .media a {
+      color: #e8852e;
+      text-decoration: none;
+      background: rgba(255,255,255,0.3);
+      padding: 6px 18px;
+      border-radius: 60px;
+      font-size: 13px;
+      border: 1px solid rgba(255,255,255,0.3);
+    }
+    .card h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #e8852e;
+      margin-bottom: 8px;
+      width: 100%;
+      word-break: break-word;
+      flex-shrink: 0;
+    }
+    .card p {
+      font-size: 13.5px;
+      color: #4a7a4a;
+      line-height: 1.8;
+      margin-bottom: 16px;
+      width: 100%;
+      word-break: break-word;
+      flex: 1;
+    }
+    .card .btn-link {
+      display: inline-block;
+      padding: 10px 30px;
+      border-radius: 60px;
+      font-size: 14px;
+      color: #1a3a1a;
+      background: linear-gradient(135deg, #ffb347, #ff8c42);
+      text-decoration: none;
+      transition: 0.25s;
+      box-shadow: 0 4px 12px rgba(255,179,71,0.15);
+      border: 1px solid rgba(255,255,255,0.1);
+      flex-shrink: 0;
+      width: 100%;
+      max-width: 200px;
+      margin-top: auto;
+      font-weight: 500;
+    }
+    .card .btn-link:hover {
+      background: linear-gradient(135deg, #ffc057, #ff9a52);
+      transform: scale(1.03);
+      box-shadow: 0 8px 24px rgba(255,179,71,0.2);
+    }
+
+    /* ===== Output Box ===== */
+    .output-box {
+      width: 100%;
+      max-width: 1100px;
+      margin-top: 18px;
+      background: rgba(240,255,240,0.35);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 24px;
+      padding: 16px 18px;
+      border: 1px solid rgba(255,255,255,0.4);
+      transition: 0.25s;
+      position: relative;
+    }
+    .output-box .copy-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      padding: 6px 16px;
+      border-radius: 40px;
+      border: 1px solid rgba(0,0,0,0.06);
+      background: rgba(240,255,240,0.6);
+      backdrop-filter: blur(4px);
+      font-family: 'Vazir', sans-serif;
+      font-size: 12px;
+      font-weight: 400;
+      color: #3a5a3a;
+      cursor: pointer;
+      transition: 0.25s;
+      z-index: 2;
+    }
+    .output-box .copy-btn:hover {
+      transform: scale(1.05);
+    }
+    .output-box .copy-btn.copied {
+      background: rgba(232,133,46,0.15);
+      color: #e8852e;
+    }
+    .output-box pre {
+      font-size: 11px;
+      color: #3a5a3a;
+      white-space: pre-wrap;
+      word-break: break-word;
+      direction: ltr;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      max-height: 240px;
+      overflow-y: auto;
+      line-height: 1.6;
+      padding-right: 80px;
+    }
+    .output-box pre::-webkit-scrollbar {
+      width: 4px;
+    }
+    .output-box pre::-webkit-scrollbar-thumb {
+      background: rgba(232,133,46,0.2);
+      border-radius: 20px;
+    }
+
+    /* ===== Footer ===== */
+    .footer {
+      margin-top: 28px;
+      text-align: center;
+      font-size: 13px;
+      color: #5a8a5a;
+      background: rgba(240,255,240,0.3);
+      backdrop-filter: blur(4px);
+      padding: 12px 28px;
+      border-radius: 60px;
+      border: 1px solid rgba(255,255,255,0.3);
+      letter-spacing: 0.2px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .footer a {
+      color: #e8852e;
+      text-decoration: none;
+      font-weight: 500;
+      transition: 0.2s;
+      padding: 4px 12px;
+      border-radius: 40px;
+      background: rgba(255,255,255,0.2);
+    }
+    .footer a:hover {
+      background: rgba(232,133,46,0.08);
+      transform: scale(1.05);
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 640px) {
+      body { padding: 14px 10px 24px; }
+      .card {
+        flex: 0 0 85vw;
+        min-height: 280px;
+        padding: 18px 14px;
+        border-radius: 26px;
+      }
+      .card h3 { font-size: 16px; }
+      .card p { font-size: 12.5px; }
+      .card .btn-link { font-size: 13px; padding: 9px 20px; max-width: 160px; }
+      .settings-panel { padding: 14px 16px; gap: 10px; }
+      .settings-group label { font-size: 12px; }
+      .settings-group select { font-size: 12px; padding: 4px 10px; }
+      .output-box pre { padding-right: 70px; }
+      .output-box .copy-btn { font-size: 11px; padding: 4px 12px; top: 10px; right: 10px; }
+    }
+    @media (max-width: 420px) {
+      .card {
+        flex: 0 0 92vw;
+        min-height: 250px;
+        padding: 14px 10px;
+        border-radius: 22px;
+      }
+      .card h3 { font-size: 14px; }
+      .card .media { aspect-ratio: 4/3; margin-bottom: 10px; }
+      .scroll-container { gap: 12px; padding: 6px 2px 14px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <h1 id="pageTitle">📖 Page Turner Builder</h1>
+    <p id="pageSub">Modern Design · Multi-Language Support</p>
+  </div>
+
+  <!-- Settings Panel -->
+  <div class="settings-panel">
+    <div class="settings-group">
+      <label id="langLabel">Language
+        <select id="langSelect">
+          <option value="en">English</option>
+          <option value="fa">فارسی</option>
+          <option value="ar">العربية</option>
+          <option value="es">Español</option>
+          <option value="zh">中文</option>
+          <option value="ru">Русский</option>
+          <option value="bqi">بختیاری</option>
+          <option value="azb">آذری</option>
+          <option value="lrc">لری</option>
+          <option value="ckb">کوردی (سورانی)</option>
+          <option value="kmr">کوردی (کرمانجی)</option>
+        </select>
+      </label>
+    </div>
+    <div class="settings-group">
+      <label id="themeLabel">Theme
+        <select id="themeSelect">
+          <option value="light">Light</option>
+          <option value="dark">Dark</option>
+        </select>
+      </label>
+    </div>
+    <div class="settings-group">
+      <label id="dirLabel">Direction
+        <select id="dirSelect">
+          <option value="rtl">RTL</option>
+          <option value="ltr">LTR</option>
+        </select>
+      </label>
+    </div>
+    <div class="settings-group">
+      <label id="autoLabel">Auto Scroll
+        <input type="checkbox" id="autoScrollCheck">
+      </label>
+    </div>
+    <div class="settings-group">
+      <label id="speedLabel">Speed
+        <input type="range" id="speedRange" min="1" max="5" value="2">
+        <span class="range-label" id="speedValue">2</span>
+      </label>
+    </div>
+  </div>
+
+  <!-- Input Box -->
+  <div class="input-box">
+    <textarea id="cardInput" placeholder="Title | Description | Button Text <Link> | Media Link (optional)&#10;Example:&#10;Sample Page | Simple description | View <https://example.com>"></textarea>
+    <button class="btn-generate" id="generateBtn" onclick="generate()">🚀 Generate Pages</button>
+  </div>
+
+  <!-- Cards Container -->
+  <div class="scroll-container" id="cardContainer"></div>
+
+  <!-- Output -->
+  <div class="output-box">
+    <button class="copy-btn" id="copyBtn" onclick="copyCode()">Copy Code</button>
+    <pre id="htmlOutput">Generated HTML code...</pre>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <span id="footerText">© 2026 Arvin Amiri</span>
+    <a href="https://eitaa.com/arvinamiri_org" target="_blank" rel="noopener">arvinamiri_org@</a>
+  </div>
+
+  <script>
+    // ===== Multi-Language Dictionary =====
+    const translations = {
+      en: {
+        title: '📖 Page Turner Builder',
+        sub: 'Modern Design · Multi-Language Support',
+        langLabel: 'Language',
+        themeLabel: 'Theme',
+        dirLabel: 'Direction',
+        autoLabel: 'Auto Scroll',
+        speedLabel: 'Speed',
+        generateBtn: '🚀 Generate Pages',
+        placeholder: 'Title | Description | Button Text <Link> | Media Link (optional)\nExample:\nSample Page | Simple description | View <https://example.com>',
+        outputPlaceholder: 'Generated HTML code...',
+        footer: '© 2026 Arvin Amiri',
+        contact: 'arvinamiri_org@',
+        light: 'Light',
+        dark: 'Dark',
+        rtl: 'RTL',
+        ltr: 'LTR',
+        english: 'English',
+        persian: 'فارسی',
+        arabic: 'العربية',
+        spanish: 'Español',
+        chinese: '中文',
+        russian: 'Русский',
+        bakhtiari: 'بختیاری',
+        azerbaijani: 'آذری',
+        lori: 'لری',
+        kurdi_sorani: 'کوردی (سورانی)',
+        kurdi_kurmanji: 'کوردی (کرمانجی)',
+        copyBtn: 'Copy Code',
+        copied: 'Copied!'
+      },
+      fa: {
+        title: '📖 صفحه ورق زن ساز',
+        sub: 'طراحی مدرن · پشتیبانی چندزبانه',
+        langLabel: 'زبان',
+        themeLabel: 'تم',
+        dirLabel: 'جهت نوشتار',
+        autoLabel: 'اسکرول خودکار',
+        speedLabel: 'سرعت',
+        generateBtn: '🚀 ساخت صفحات',
+        placeholder: 'عنوان | توضیح | متن دکمه <لینک> | لینک فایل (اختیاری)\nمثال:\nصفحه نمونه | توضیحات ساده | مشاهده <https://example.com>',
+        outputPlaceholder: 'کد HTML تولید شده...',
+        footer: '© ۱۴۰۵ آروین امیری',
+        contact: 'arvinamiri_org@',
+        light: 'روشن',
+        dark: 'تاریک',
+        rtl: 'راست‌چین',
+        ltr: 'چپ‌چین',
+        english: 'English',
+        persian: 'فارسی',
+        arabic: 'العربية',
+        spanish: 'Español',
+        chinese: '中文',
+        russian: 'Русский',
+        bakhtiari: 'بختیاری',
+        azerbaijani: 'آذری',
+        lori: 'لری',
+        kurdi_sorani: 'کوردی (سورانی)',
+        kurdi_kurmanji: 'کوردی (کرمانجی)',
+        copyBtn: 'کپی کد',
+        copied: 'کپی شد!'
+      },
+      ar: {
+        title: '📖 منشئ تقليب الصفحات',
+        sub: 'تصميم حديث · دعم متعدد اللغات',
+        langLabel: 'اللغة',
+        themeLabel: 'المظهر',
+        dirLabel: 'الاتجاه',
+        autoLabel: 'تمرير تلقائي',
+        speedLabel: 'السرعة',
+        generateBtn: '🚀 إنشاء الصفحات',
+        placeholder: 'العنوان | الوصف | نص الزر <الرابط> | رابط الوسائط (اختياري)\nمثال:\nصفحة نموذج | وصف بسيط | عرض <https://example.com>',
+        outputPlaceholder: 'كود HTML المُنشأ...',
+        footer: '© ۲۰۲۶ آروین امیری',
+        contact: 'arvinamiri_org@',
+        light: 'فاتح',
+        dark: 'داكن',
+        rtl: 'RTL',
+        ltr: 'LTR',
+        english: 'English',
+        persian: 'فارسی',
+        arabic: 'العربية',
+        spanish: 'Español',
+        chinese: '中文',
+        russian: 'Русский',
+        bakhtiari: 'بختیاری',
+        azerbaijani: 'آذری',
+        lori: 'لری',
+        kurdi_sorani: 'کوردی (سورانی)',
+        kurdi_kurmanji: 'کوردی (کرمانجی)',
+        copyBtn: 'نسخ الكود',
+        copied: 'تم النسخ!'
+      },
+      es: {
+        title: '📖 Creador de Pasadores de Páginas',
+        sub: 'Diseño Moderno · Soporte Multi-Idioma',
+        langLabel: 'Idioma',
+        themeLabel: 'Tema',
+        dirLabel: 'Dirección',
+        autoLabel: 'Desplazamiento Automático',
+        speedLabel: 'Velocidad',
+        generateBtn: '🚀 Generar Páginas',
+        placeholder: 'Título | Descripción | Texto del botón <Enlace> | Enlace multimedia (opcional)\nEjemplo:\nPágina de muestra | Descripción simple | Ver <https://example.com>',
+        outputPlaceholder: 'Código HTML generado...',
+        footer: '© 2026 Arvin Amiri',
+        contact: 'arvinamiri_org@',
+        light: 'Claro',
+        dark: 'Oscuro',
+        rtl: 'RTL',
+        ltr: 'LTR',
+        english: 'English',
+        persian: 'فارسی',
+        arabic: 'العربية',
+        spanish: 'Español',
+        chinese: '中文',
+        russian: 'Русский',
+        bakhtiari: 'بختیاری',
+        azerbaijani: 'آذری',
+        lori: 'لری',
+        kurdi_sorani: 'کوردی (سورانی)',
+        kurdi_kurmanji: 'کوردی (کرمانجی)',
+        copyBtn: 'Copiar Código',
+        copied: '¡Copiado!'
+      },
+      zh: {
+        title: '📖 翻页生成器',
+        sub: '现代设计 · 多语言支持',
+        langLabel: '语言',
+        themeLabel: '主题',
+        dirLabel: '方向',
+        autoLabel: '自动滚动',
+        speedLabel: '速度',
+        generateBtn: '🚀 生成页面',
+        placeholder: '标题 | 描述 | 按钮文本 <链接> | 媒体链接（可选）\n示例:\n示例页面 | 简单描述 | 查看 <https://example.com>',
+        outputPlaceholder: '生成的HTML代码...',
+        footer: '© 2026 Arvin Amiri',
+        contact: 'arvinamiri_org@',
+        light: '明亮',
+        dark: '黑暗',
+        rtl: 'RTL',
+        ltr: 'LTR',
+        english: 'English',
+        persian: 'فارسی',
+        arabic: 'العربية',
+        spanish: 'Español',
+        chinese: '中文',
+        russian: 'Русский',
+        bakhtiari: 'بختیاری',
+        azerbaijani: 'آذری',
+        lori: 'لری',
+        kurdi_sorani: 'کوردی (سورانی)',
+        kurdi_kurmanji: 'کوردی (کرمانجی)',
+        copyBtn: '复制代码',
+        copied: '已复制！'
+      },
+      ru: {
+        title: '📖 Конструктор Перелистывания Страниц',
+        sub: 'Современный Дизайн · Многоязычная Поддержка',
+        langLabel: 'Язык',
+        themeLabel: 'Тема',
+        dirLabel: 'Направление',
+        autoLabel: 'Автопрокрутка',
+        speedLabel: 'Скорость',
+        generateBtn: '🚀 Создать Страницы',
+        placeholder: 'Название | Описание | Текст кнопки <Ссылка> | Ссылка на медиа (опционально)\nПример:\nОбразец страницы | Простое описание | Просмотр <https://example.com>',
+        outputPlaceholder: 'Сгенерированный HTML-код...',
+        footer: '© 2026 Arvin Amiri',
+        contact: 'arvinamiri_org@',
+        light: 'Светлая',
+        dark: 'Тёмная',
+        rtl: 'RTL',
+        ltr: 'LTR',
+        english: 'English',
+        persian: 'فارسی',
+        arabic: 'العربية',
+        spanish: 'Español',
+        chinese: '中文',
+        russian: 'Русский',
+        bakhtiari: 'بختیاری',
+        azerbaijani: 'آذری',
+        lori: 'لری',
+        kurdi_sorani: 'کوردی (سورانی)',
+        kurdi_kurmanji: 'کوردی (کرمانجی)',
+        copyBtn: 'Копировать Код',
+        copied: 'Скопировано!'
+      },
+      bqi: {
+        title: '📖 صفحه ورق زن ساز (بختیاری)',
+        sub: 'طراحی مدرن · پشتیبانی چندزبانه',
+        langLabel: 'زون',
+        themeLabel: 'تم',
+        dirLabel: 'جهت نوشتار',
+        autoLabel: 'اسکرول خودکار',
+        speedLabel: 'سرعت',
+        generateBtn: '🚀 ساخت صفحات',
+        placeholder: 'عنوان | توضیح | متن دکمه <لینک> | لینک فایل (اختیاری)\nنمونه:\nصفحه نمونه | توضیحات ساده | مشاهده <https://example.com>',
+        outputPlaceholder: 'کد HTML تولید شده...',
+        footer: '© ۱۴۰۵ آروین امیری',
+        contact: 'arvinamiri_org@',
+        light: 'روشن',
+        dark: 'تاریک',
+        rtl: 'راست‌چین',
+        ltr: 'چپ‌چین',
+        english: 'English',
+        persian: 'فارسی',
+        arabic: 'العربية',
+        spanish: 'Español',
+        chinese: '中文',
+        russian: 'Русский',
+        bakhtiari: 'بختیاری',
+        azerbaijani: 'آذری',
+        lori: 'لری',
+        kurdi_sorani: 'کوردی (سورانی)',
+        kurdi_kurmanji: 'کوردی (کرمانجی)',
+        copyBtn: 'کپی کد',
+        copied: 'کپی بیه!'
+      },
+      azb: {
+        title: '📖 صفحه ورق زن ساز (آذری)',
+        sub: 'طراحی مدرن · پشتیبانی چندزبانه',
+        langLabel: 'دیل',
+        themeLabel: 'تم',
+        dirLabel: 'یازی یؤنو',
+        autoLabel: 'اوتو اسکرول',
+        speedLabel: 'سورعت',
+        generateBtn: '🚀 صحیفه لر دوزلت',
+        placeholder: 'باشلیق | توضیح | دکمه متنی <لینک> | فایل لینکی (اختیاری)\nنومونه:\nنومونه صفحه | ساده توضیح | باخ <https://example.com>',
+        outputPlaceholder: 'HTML کودی...',
+        footer: '© ۱۴۰۵ آروین امیری',
+        contact: 'arvinamiri_org@',
+        light: 'روشن',
+        dark: 'تاریک',
+        rtl: 'ساغ‌دان یازی',
+        ltr: 'سول‌دان یازی',
+        english: 'English',
+        persian: 'فارسی',
+        arabic: 'العربية',
+        spanish: 'Español',
+        chinese: '中文',
+        russian: 'Русский',
+        bakhtiari: 'بختیاری',
+        azerbaijani: 'آذری',
+        lori: 'لری',
+        kurdi_sorani: 'کوردی (سورانی)',
+        kurdi_kurmanji: 'کوردی (کرمانجی)',
+        copyBtn: 'کپی کد',
+        copied: 'کپی اولدو!'
+      },
+      lrc: {
+        title: '📖 صفحه ورق زن ساز (لری)',
+        sub: 'طراحی مدرن · پشتیبانی چندزبانه',
+        langLabel: 'زون',
+        themeLabel: 'تم',
+        dirLabel: 'جهت نوشتار',
+        autoLabel: 'اسکرول خودکار',
+        speedLabel: 'سرعت',
+        generateBtn: '🚀 ساخت صفحات',
+        placeholder: 'عنوان | توضیح | متن دکمه <لینک> | لینک فایل (اختیاری)\nنمونه:\nصفحه نمونه | توضیحات ساده | مشاهده <https://example.com>',
+        outputPlaceholder: 'کد HTML تولید شده...',
+        footer: '© ۱۴۰۵ آروین امیری',
+        contact: 'arvinamiri_org@',
+        light: 'روشن',
+        dark: 'تاریک',
+        rtl: 'راست‌چین',
+        ltr: 'چپ‌چین',
+        english: 'English',
+        persian: 'فارسی',
+        arabic: 'العربية',
+        spanish: 'Español',
+        chinese: '中文',
+        russian: 'Русский',
+        bakhtiari: 'بختیاری',
+        azerbaijani: 'آذری',
+        lori: 'لری',
+        kurdi_sorani: 'کوردی (سورانی)',
+        kurdi_kurmanji: 'کوردی (کرمانجی)',
+        copyBtn: 'کپی کد',
+        copied: 'کپی بیه!'
+      },
+      ckb: {
+        title: '📖 پەڕگەری وەرگێڕان (کوردی سورانی)',
+        sub: 'دیزاینی نوێن · پشتگیری زمان',
+        langLabel: 'زمان',
+        themeLabel: 'ڕەنگ',
+        dirLabel: 'ئاڕاستە',
+        autoLabel: 'خۆگەڕان',
+        speedLabel: 'خێرایی',
+        generateBtn: '🚀 دروستکردنی پەڕە',
+        placeholder: 'نازناو | شرۆڤە | دەقی دوگمە <بەستەر> | بەستەری میدیا (ئارەزوومەند)\nنمونە:\nپەڕەی نمونە | شرۆڤەی سادە | بینین <https://example.com>',
+        outputPlaceholder: 'کۆدی HTML...',
+        footer: '© ۲۰۲٦ ئارڤین ئەمیری',
+        contact: 'arvinamiri_org@',
+        light: 'ڕووناک',
+        dark: 'تاریک',
+        rtl: 'RTL',
+        ltr: 'LTR',
+        english: 'English',
+        persian: 'فارسی',
+        arabic: 'العربية',
+        spanish: 'Español',
+        chinese: '中文',
+        russian: 'Русский',
+        bakhtiari: 'بختیاری',
+        azerbaijani: 'آذری',
+        lori: 'لری',
+        kurdi_sorani: 'کوردی (سورانی)',
+        kurdi_kurmanji: 'کوردی (کرمانجی)',
+        copyBtn: 'کۆپی کردن',
+        copied: 'کۆپی کرا!'
+      },
+      kmr: {
+        title: '📖 Çêkera Rûpelan (Kurmancî)',
+        sub: 'Sêwirana Nûjen · Piştgiriya Pir-Ziman',
+        langLabel: 'Ziman',
+        themeLabel: 'Tema',
+        dirLabel: 'Rê',
+        autoLabel: 'Xwe-gerandin',
+        speedLabel: 'Lez',
+        generateBtn: '🚀 Rûpelan Çêke',
+        placeholder: 'Sernav | Danasîn | Nivîsa Bişkoka <Girêdan> | Girêdana Medyayê (vebijarkî)\nMînak:\nRûpela Mînak | Danasîna Hêsan | Dîtin <https://example.com>',
+        outputPlaceholder: 'Koda HTML ya çêkirî...',
+        footer: '© 2026 Arvin Amiri',
+        contact: 'arvinamiri_org@',
+        light: 'Ronahî',
+        dark: 'Tarî',
+        rtl: 'RTL',
+        ltr: 'LTR',
+        english: 'English',
+        persian: 'فارسی',
+        arabic: 'العربية',
+        spanish: 'Español',
+        chinese: '中文',
+        russian: 'Русский',
+        bakhtiari: 'بختیاری',
+        azerbaijani: 'آذری',
+        lori: 'لری',
+        kurdi_sorani: 'کوردی (سورانی)',
+        kurdi_kurmanji: 'کوردی (کرمانجی)',
+        copyBtn: 'Kodê Kopî Bike',
+        copied: 'Hat Kopîkirin!'
+      }
+    };
+
+    // ===== Apply Language =====
+    function applyLanguage(lang) {
+      const t = translations[lang];
+      if (!t) return;
+
+      document.getElementById('pageTitle').textContent = t.title;
+      document.getElementById('pageSub').textContent = t.sub;
+      document.getElementById('langLabel').innerHTML = `${t.langLabel} <select id="langSelect">...</select>`;
+      document.getElementById('themeLabel').innerHTML = `${t.themeLabel} <select id="themeSelect">...</select>`;
+      document.getElementById('dirLabel').innerHTML = `${t.dirLabel} <select id="dirSelect">...</select>`;
+      document.getElementById('autoLabel').innerHTML = `${t.autoLabel} <input type="checkbox" id="autoScrollCheck">`;
+      document.getElementById('speedLabel').innerHTML = `${t.speedLabel} <input type="range" id="speedRange" min="1" max="5" value="2"> <span class="range-label" id="speedValue">2</span>`;
+      document.getElementById('generateBtn').textContent = t.generateBtn;
+      document.getElementById('cardInput').placeholder = t.placeholder;
+      document.getElementById('htmlOutput').textContent = t.outputPlaceholder;
+      document.getElementById('footerText').textContent = t.footer;
+      document.getElementById('copyBtn').textContent = t.copyBtn;
+
+      // Update select options
+      const langSelect = document.getElementById('langSelect');
+      langSelect.innerHTML = `
+        <option value="en">${t.english}</option>
+        <option value="fa">${t.persian}</option>
+        <option value="ar">${t.arabic}</option>
+        <option value="es">${t.spanish}</option>
+        <option value="zh">${t.chinese}</option>
+        <option value="ru">${t.russian}</option>
+        <option value="bqi">${t.bakhtiari}</option>
+        <option value="azb">${t.azerbaijani}</option>
+        <option value="lrc">${t.lori}</option>
+        <option value="ckb">${t.kurdi_sorani}</option>
+        <option value="kmr">${t.kurdi_kurmanji}</option>
+      `;
+      langSelect.value = lang;
+
+      const themeSelect = document.getElementById('themeSelect');
+      themeSelect.innerHTML = `
+        <option value="light">${t.light}</option>
+        <option value="dark">${t.dark}</option>
+      `;
+
+      const dirSelect = document.getElementById('dirSelect');
+      dirSelect.innerHTML = `
+        <option value="rtl">${t.rtl}</option>
+        <option value="ltr">${t.ltr}</option>
+      `;
+
+      // Re-bind events
+      document.getElementById('langSelect').addEventListener('change', function() {
+        const newLang = this.value;
+        localStorage.setItem('preferred_language', newLang);
+        applyLanguage(newLang);
+      });
+
+      document.getElementById('themeSelect').addEventListener('change', function() {
+        applyTheme(this.value);
+        localStorage.setItem('preferred_theme', this.value);
+      });
+
+      document.getElementById('dirSelect').addEventListener('change', function() {
+        applyDirection(this.value);
+        localStorage.setItem('preferred_direction', this.value);
+      });
+
+      // Re-bind auto scroll
+      document.getElementById('autoScrollCheck').addEventListener('change', function() {
+        if (this.checked) {
+          startAutoScroll();
+        } else {
+          stopAutoScroll();
+        }
+      });
+
+      document.getElementById('speedRange').addEventListener('input', function() {
+        document.getElementById('speedValue').textContent = this.value;
+        if (document.getElementById('autoScrollCheck').checked) {
+          startAutoScroll(parseInt(this.value));
+        }
+      });
+    }
+
+    // ===== Theme =====
+    function applyTheme(theme) {
+      document.body.classList.remove('theme-dark', 'theme-light');
+      if (theme === 'dark') {
+        document.body.classList.add('theme-dark');
+      } else {
+        document.body.classList.add('theme-light');
+      }
+    }
+
+    // ===== Direction =====
+    function applyDirection(dir) {
+      document.body.classList.remove('dir-rtl', 'dir-ltr');
+      if (dir === 'rtl') {
+        document.body.classList.add('dir-rtl');
+      } else {
+        document.body.classList.add('dir-ltr');
+      }
+    }
+
+    // ===== Auto Scroll =====
+    let autoScrollInterval = null;
+    const container = document.getElementById('cardContainer');
+
+    function startAutoScroll(speed) {
+      stopAutoScroll();
+      if (!container.children.length) return;
+      const baseSpeed = speed || parseInt(document.getElementById('speedRange').value) || 2;
+      const delay = Math.max(800, 3000 - baseSpeed * 400);
+      autoScrollInterval = setInterval(() => {
+        if (!container.children.length) return;
+        const maxScroll = container.scrollWidth - container.clientWidth;
+        let next = container.scrollLeft + container.clientWidth * 0.85;
+        if (next >= maxScroll) next = 0;
+        container.scrollTo({ left: next, behavior: 'smooth' });
+      }, delay);
+    }
+
+    function stopAutoScroll() {
+      if (autoScrollInterval) {
+        clearInterval(autoScrollInterval);
+        autoScrollInterval = null;
+      }
+    }
+
+    // ===== Copy Code =====
+    function copyCode() {
+      const output = document.getElementById('htmlOutput');
+      const copyBtn = document.getElementById('copyBtn');
+      const text = output.textContent;
+      
+      navigator.clipboard.writeText(text).then(() => {
+        const t = translations[document.getElementById('langSelect').value];
+        copyBtn.textContent = t.copied || 'Copied!';
+        copyBtn.classList.add('copied');
+        setTimeout(() => {
+          copyBtn.textContent = t.copyBtn || 'Copy Code';
+          copyBtn.classList.remove('copied');
+        }, 2000);
+      }).catch(() => {
+        const range = document.createRange();
+        range.selectNode(output);
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(range);
+        document.execCommand('copy');
+        window.getSelection().removeAllRanges();
+        const t = translations[document.getElementById('langSelect').value];
+        copyBtn.textContent = t.copied || 'Copied!';
+        copyBtn.classList.add('copied');
+        setTimeout(() => {
+          copyBtn.textContent = t.copyBtn || 'Copy Code';
+          copyBtn.classList.remove('copied');
+        }, 2000);
+      });
+    }
+
+    // ===== Generate Cards =====
+    function generate() {
+      const input = document.getElementById('cardInput').value.trim().split('\n');
+      const output = document.getElementById('htmlOutput');
+
+      container.innerHTML = '';
+      let htmlCards = '';
+
+      const theme = document.getElementById('themeSelect').value;
+      const dir = document.getElementById('dirSelect').value;
+      const autoScroll = document.getElementById('autoScrollCheck').checked;
+      const speed = document.getElementById('speedRange').value;
+      const lang = document.getElementById('langSelect').value;
+      const t = translations[lang];
+
+      let cardCount = 0;
+      input.forEach(line => {
+        if (!line.includes('|') || !line.includes('<')) return;
+
+        let parts = line.split('|').map(s => s.trim());
+        if (parts.length < 3) return;
+        let title = parts[0];
+        let desc = parts[1];
+        let [btnText, btnLink] = parts[2].split('<');
+        btnText = btnText.trim();
+        btnLink = btnLink.replace('>', '').trim();
+        let mediaLink = parts[3] ? parts[3].trim() : '';
+
+        let mediaHTML = '';
+        if (mediaLink) {
+          if (/\.(png|jpg|jpeg|gif|webp|svg)$/i.test(mediaLink)) {
+            mediaHTML = `<div class="media"><img src="${mediaLink}" alt="" loading="lazy" /></div>`;
+          } else if (/\.(mp4|webm|mov|ogg)$/i.test(mediaLink)) {
+            mediaHTML = `<div class="media"><video src="${mediaLink}" controls playsinline></video></div>`;
+          } else if (/\.(mp3|wav|ogg|flac)$/i.test(mediaLink)) {
+            mediaHTML = `<div class="media"><audio src="${mediaLink}" controls></audio></div>`;
+          } else {
+            mediaHTML = `<div class="media" style="background:rgba(0,0,0,0.02);padding:6px;"><a href="${mediaLink}" target="_blank" rel="noopener">Attachment</a></div>`;
+          }
+        }
+
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          ${mediaHTML}
+          <h3>${title}</h3>
+          <p>${desc}</p>
+          <a href="${btnLink}" target="_blank" rel="noopener" class="btn-link">${btnText}</a>
+        `;
+        container.appendChild(card);
+        cardCount++;
+
+        htmlCards += `
+  <div class="card">
+    ${mediaHTML}
+    <h3>${title}</h3>
+    <p>${desc}</p>
+    <a href="${btnLink}" target="_blank" rel="noopener" class="btn-link">${btnText}</a>
+  </div>`;
+      });
+
+      if (cardCount === 0) {
+        output.textContent = 'Please enter at least one page in the correct format.';
+        return;
+      }
+
+      // Build output HTML with language
+      const themeClass = theme === 'dark' ? 'theme-dark' : 'theme-light';
+      const dirClass = dir === 'rtl' ? 'dir-rtl' : 'dir-ltr';
+
+      let autoScrollJS = '';
+      if (autoScroll) {
+        const delay = Math.max(800, 3000 - parseInt(speed) * 400);
+        autoScrollJS = `
+    (function() {
+      const container = document.querySelector('.scroll-container');
+      let interval = null;
+      function startAutoScroll() {
+        if (interval) clearInterval(interval);
+        if (!container.children.length) return;
+        interval = setInterval(() => {
+          const maxScroll = container.scrollWidth - container.clientWidth;
+          let next = container.scrollLeft + container.clientWidth * 0.85;
+          if (next >= maxScroll) next = 0;
+          container.scrollTo({ left: next, behavior: 'smooth' });
+        }, ${delay});
+      }
+      function stopAutoScroll() {
+        if (interval) { clearInterval(interval); interval = null; }
+      }
+      startAutoScroll();
+      container.addEventListener('mouseenter', stopAutoScroll);
+      container.addEventListener('mouseleave', startAutoScroll);
+      container.addEventListener('touchstart', stopAutoScroll);
+      container.addEventListener('touchend', startAutoScroll);
+    })();`;
+      }
+
+      const fullHtml = `<!DOCTYPE html>
+<html lang="${lang}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>Page Turner Builder</title>
+  <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/font-face.css" rel="stylesheet" />
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family:'Vazir',sans-serif;
+      background:linear-gradient(145deg,#f0f7f0 0%,#e0efe0 100%);
+      min-height:100vh;
+      padding:24px 16px 40px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      color:#1e2a1e;
+      transition: background 0.3s, color 0.2s;
+    }
+    body.dir-rtl { direction: rtl; }
+    body.dir-ltr { direction: ltr; }
+    body.dir-rtl .card, body.dir-rtl .header, body.dir-rtl .settings-panel, body.dir-rtl .footer { direction: rtl; }
+    body.dir-ltr .card, body.dir-ltr .header, body.dir-ltr .settings-panel, body.dir-ltr .footer { direction: ltr; }
+    body.theme-dark {
+      background: linear-gradient(145deg, #0f1a0f 0%, #1a2a1a 50%, #0f2a0f 100%);
+      color: #d8e8d8;
+    }
+    body.theme-dark .card {
+      background: rgba(30,60,30,0.5);
+      border-color: rgba(255,255,255,0.06);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    }
+    body.theme-dark .card:hover { background: rgba(40,80,40,0.6); }
+    body.theme-dark .card h3 { color: #ffb347; }
+    body.theme-dark .card p { color: #b0d0b0; }
+    body.theme-dark .card .btn-link {
+      background: linear-gradient(135deg, #ffb347, #ff8c42);
+      color: #0f1a0f;
+    }
+    body.theme-dark .card .btn-link:hover {
+      background: linear-gradient(135deg, #ffc057, #ff9a52);
+      box-shadow: 0 8px 24px rgba(255,179,71,0.2);
+    }
+    body.theme-dark .footer {
+      background: rgba(20,40,20,0.4);
+      color: #b0d0b0;
+      border-color: rgba(255,255,255,0.05);
+    }
+    body.theme-dark .footer a { color: #ffb347; }
+    body.theme-light .card {
+      background: rgba(240,255,240,0.5);
+      border-color: rgba(255,255,255,0.6);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.04);
+    }
+    body.theme-light .card:hover { background: rgba(240,255,240,0.65); }
+    body.theme-light .card h3 { color: #e8852e; }
+    body.theme-light .card p { color: #4a7a4a; }
+    body.theme-light .card .btn-link {
+      background: linear-gradient(135deg, #ffb347, #ff8c42);
+      color: #1a3a1a;
+    }
+    body.theme-light .card .btn-link:hover {
+      background: linear-gradient(135deg, #ffc057, #ff9a52);
+      box-shadow: 0 8px 24px rgba(255,179,71,0.15);
+    }
+    body.theme-light .footer {
+      background: rgba(240,255,240,0.3);
+      color: #5a8a5a;
+      border-color: rgba(255,255,255,0.3);
+    }
+    body.theme-light .footer a { color: #e8852e; }
+    .scroll-container {
+      display:flex;
+      overflow-x:auto;
+      gap:18px;
+      padding:12px 4px 28px;
+      max-width:1100px;
+      width:100%;
+      scroll-snap-type:x mandatory;
+      -webkit-overflow-scrolling:touch;
+      scroll-behavior:smooth;
+    }
+    .scroll-container::-webkit-scrollbar { height:5px; }
+    .scroll-container::-webkit-scrollbar-track { background:rgba(0,0,0,0.04); border-radius:20px; }
+    .scroll-container::-webkit-scrollbar-thumb { background:rgba(232,133,46,0.3); border-radius:20px; }
+    .card {
+      flex:0 0 280px;
+      min-height:320px;
+      height:auto;
+      backdrop-filter:blur(16px);
+      -webkit-backdrop-filter:blur(16px);
+      border-radius:32px;
+      padding:24px 18px 22px;
+      scroll-snap-align:center;
+      text-align:center;
+      transition:0.35s cubic-bezier(0.2,0.9,0.3,1.1);
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:flex-start;
+      overflow:visible;
+      border:1px solid rgba(255,255,255,0.6);
+    }
+    .card:hover { transform:translateY(-6px) scale(1.01); box-shadow:0 16px 48px rgba(232,133,46,0.08); }
+    .card .media { width:100%; margin-bottom:14px; border-radius:20px; overflow:hidden; background:rgba(0,0,0,0.02); aspect-ratio:16/9; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .card .media img, .card .media video { width:100%; height:100%; object-fit:cover; display:block; border-radius:20px; }
+    .card .media audio { width:100%; height:54px; border-radius:40px; }
+    .card .media a { color:#e8852e; text-decoration:none; background:rgba(255,255,255,0.3); padding:6px 18px; border-radius:60px; font-size:13px; border:1px solid rgba(255,255,255,0.3); }
+    .card h3 { font-size:18px; font-weight:700; margin-bottom:8px; width:100%; flex-shrink:0; }
+    .card p { font-size:13.5px; line-height:1.8; margin-bottom:16px; width:100%; flex:1; }
+    .card .btn-link {
+      display:inline-block; padding:10px 30px; border-radius:60px; font-size:14px; font-weight:500;
+      text-decoration:none; transition:0.25s; box-shadow:0 4px 12px rgba(255,179,71,0.15);
+      border:1px solid rgba(255,255,255,0.1); flex-shrink:0; width:100%; max-width:200px;
+      margin-top:auto;
+      background:linear-gradient(135deg,#ffb347,#ff8c42);
+      color:#1a3a1a;
+    }
+    .card .btn-link:hover { background:linear-gradient(135deg,#ffc057,#ff9a52); transform:scale(1.03); box-shadow:0 8px 24px rgba(255,179,71,0.2); }
+    .footer {
+      margin-top:32px; text-align:center; font-size:13px; padding:12px 28px; border-radius:60px;
+      border:1px solid rgba(255,255,255,0.3); letter-spacing:0.2px; backdrop-filter:blur(4px);
+      display:flex; align-items:center; gap:12px; flex-wrap:wrap; justify-content:center;
+    }
+    .footer a { text-decoration:none; font-weight:500; transition:0.2s; padding:4px 12px; border-radius:40px; background:rgba(255,255,255,0.2); }
+    .footer a:hover { transform:scale(1.05); }
+    @media (max-width:640px) {
+      .card { flex:0 0 85vw; min-height:280px; padding:18px 14px; border-radius:26px; }
+      .card h3 { font-size:16px; }
+      .card p { font-size:12.5px; }
+      .card .btn-link { font-size:13px; padding:9px 20px; max-width:160px; }
+    }
+    @media (max-width:420px) {
+      .card { flex:0 0 92vw; min-height:250px; padding:14px 10px; border-radius:22px; }
+      .card h3 { font-size:14px; }
+      .card .media { aspect-ratio:4/3; margin-bottom:10px; }
+      .scroll-container { gap:12px; padding:6px 2px 14px; }
+    }
+  </style>
+</head>
+<body class="${themeClass} ${dirClass}">
+  <h1 style="text-align:center;font-size:26px;font-weight:700;margin-bottom:20px;color:#e8852e;">📖 Page Turner Builder</h1>
+  <div class="scroll-container">
+${htmlCards}
+  </div>
+  <div class="footer">
+    <span>${t.footer}</span>
+    <a href="https://eitaa.com/arvinamiri_org" target="_blank" rel="noopener">${t.contact}</a>
+  </div>
+  <script>
+    ${autoScrollJS}
+  <\/script>
+</body>
+</html>`;
+
+      output.textContent = fullHtml;
+    }
+
+    // ===== Initialize =====
+    function init() {
+      // Load saved settings
+      let savedLang = localStorage.getItem('preferred_language');
+      if (!savedLang || !translations[savedLang]) {
+        savedLang = 'en';
+      }
+
+      let savedTheme = localStorage.getItem('preferred_theme');
+      if (!savedTheme || !['light', 'dark'].includes(savedTheme)) {
+        savedTheme = 'light';
+      }
+
+      let savedDir = localStorage.getItem('preferred_direction');
+      if (!savedDir || !['rtl', 'ltr'].includes(savedDir)) {
+        savedDir = 'rtl';
+      }
+
+      // Apply language
+      const langSelect = document.getElementById('langSelect');
+      langSelect.value = savedLang;
+      applyLanguage(savedLang);
+
+      // Apply theme
+      const themeSelect = document.getElementById('themeSelect');
+      themeSelect.value = savedTheme;
+      applyTheme(savedTheme);
+
+      // Apply direction
+      const dirSelect = document.getElementById('dirSelect');
+      dirSelect.value = savedDir;
+      applyDirection(savedDir);
+
+      // Re-bind events after language apply
+      document.getElementById('langSelect').addEventListener('change', function() {
+        const newLang = this.value;
+        localStorage.setItem('preferred_language', newLang);
+        applyLanguage(newLang);
+      });
+
+      document.getElementById('themeSelect').addEventListener('change', function() {
+        applyTheme(this.value);
+        localStorage.setItem('preferred_theme', this.value);
+      });
+
+      document.getElementById('dirSelect').addEventListener('change', function() {
+        applyDirection(this.value);
+        localStorage.setItem('preferred_direction', this.value);
+      });
+
+      document.getElementById('autoScrollCheck').addEventListener('change', function() {
+        if (this.checked) {
+          startAutoScroll();
+        } else {
+          stopAutoScroll();
+        }
+      });
+
+      document.getElementById('speedRange').addEventListener('input', function() {
+        document.getElementById('speedValue').textContent = this.value;
+        if (document.getElementById('autoScrollCheck').checked) {
+          startAutoScroll(parseInt(this.value));
+        }
+      });
+
+      // Auto scroll interaction
+      container.addEventListener('mouseenter', () => {
+        if (document.getElementById('autoScrollCheck').checked) {
+          stopAutoScroll();
+        }
+      });
+      container.addEventListener('mouseleave', () => {
+        if (document.getElementById('autoScrollCheck').checked) {
+          startAutoScroll();
+        }
+      });
+      container.addEventListener('touchstart', () => {
+        if (document.getElementById('autoScrollCheck').checked) {
+          stopAutoScroll();
+        }
+      });
+      container.addEventListener('touchend', () => {
+        if (document.getElementById('autoScrollCheck').checked) {
+          startAutoScroll();
+        }
+      });
+    }
+
+    // Run init when page loads
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>
